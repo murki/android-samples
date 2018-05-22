@@ -24,6 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * This shows how to create a simple activity with a raw MapView and add a marker to it. This
@@ -48,7 +51,10 @@ public class RawMapViewDemoActivity extends AppCompatActivity implements OnMapRe
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
         mMapView = (MapView) findViewById(R.id.map);
+        long startNs = System.nanoTime();
         mMapView.onCreate(mapViewBundle);
+        long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
+        Log.d("RawMapViewDemoActivity", "MapView onCreate complete. Took ms=" + tookMs);
 
         mMapView.getMapAsync(this);
     }
